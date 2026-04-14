@@ -1,0 +1,17 @@
+YAMLapiVersion: 1
+
+datasources:
+  - name: Loki
+    type: loki
+    access: proxy
+    url: http://loki:3100
+    isDefault: true
+
+  - name: Elasticsearch
+    type: elasticsearch
+    access: proxy
+    url: http://elasticsearch:9200
+    database: "logs"
+    jsonData:
+      timeField: "@timestamp"
+      version: 8

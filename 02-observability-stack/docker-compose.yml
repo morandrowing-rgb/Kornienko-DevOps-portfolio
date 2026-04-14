@@ -1,20 +1,9 @@
-version: '3.8'
-
 services:
-  elasticsearch:
-    image: elasticsearch:8.12.0
-    container_name: elasticsearch
-    environment:
-      - discovery.type=single-node
-      - xpack.security.enabled=false
-      - ES_JAVA_OPTS=-Xms512m -Xmx512m
-    ports:
-      - "9200:9200"
-
   loki:
     image: grafana/loki:3.0.0
     container_name: loki
-    command: -config.file=/etc/loki/local-config.yaml
+    restart: unless-stopped
+    command: -config.file=/etc/loki/local-config.yaml -auth.enabled=false
     ports:
       - "3100:3100"
     volumes:
@@ -23,17 +12,39 @@ services:
   promtail:
     image: grafana/promtail:3.0.0
     container_name: promtail
+    restart: unless-stopped
+    command: -config.file=/etc/promtail/config.yml
     volumes:
       - ./promtail/promtail-config.yaml:/etc/promtail/config.yml
-      - /var/log:/var/log:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    network_mode: host
+    depends_on:
+      - loki
 
   grafana:
     image: grafana/grafana:10.4.0
     container_name: grafana
+    restart: unless-stopped
     ports:
       - "3000:3000"
     volumes:
       - ./grafana/provisioning:/etc/grafana/provisioning
+    depends_on:
+      - loki
+
+  elasticsearch:
+    image: elasticsearch:8.12.0
+    container_name: elasticsearch
+    restart: unless-stopped
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
 
 volumes:
   es_data:

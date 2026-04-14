@@ -2,6 +2,8 @@ auth_enabled: false
 
 server:
   http_listen_port: 3100
+  http_listen_address: 0.0.0.0
+  grpc_listen_port: 9095
 
 ingester:
   lifecycler:
@@ -16,18 +18,24 @@ ingester:
 
 schema_config:
   configs:
-    - from: "2020-01-01"
-      store: boltdb
+    - from: 2024-01-01
+      store: tsdb
       object_store: filesystem
-      schema: v11
+      schema: v13
       index:
         prefix: index_
-        period: 168h
+        period: 24h
 
 storage_config:
-  boltdb_shipper:
-    active_index_directory: /tmp/loki/boltdb-shipper-active
-    cache_location: /tmp/loki/boltdb-shipper-cache
-    cache_ttl: 24h
   filesystem:
     directory: /tmp/loki/chunks
+
+limits_config:
+  allow_structured_metadata: false
+
+common:
+  path_prefix: /tmp/loki
+  replication_factor: 1
+
+compactor:
+  working_directory: /tmp/loki/compactor
