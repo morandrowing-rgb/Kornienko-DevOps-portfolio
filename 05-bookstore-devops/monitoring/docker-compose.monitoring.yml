@@ -1,0 +1,5 @@
+# Grafana + Loki + Elasticsearch для Bookstore
+version: '3.8'
+services:
+  grafana:
+    image: grafana/grafana:10.4.0

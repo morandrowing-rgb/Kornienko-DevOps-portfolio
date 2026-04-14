@@ -1,0 +1,5 @@
+# Полный GitLab CI для Bookstore
+stages:
+  - terraform
+  - build
+  - deploy-k8s

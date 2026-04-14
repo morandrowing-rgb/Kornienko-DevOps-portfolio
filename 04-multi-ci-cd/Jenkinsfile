@@ -1,0 +1,15 @@
+pipeline {
+  agent any
+  stages {
+    stage('Build') {
+      steps {
+        sh 'echo "Building with Jenkins..."'
+      }
+    }
+    stage('Docker Build') {
+      steps {
+        sh 'docker build -t myapp-jenkins:latest .'
+      }
+    }
+  }
+}

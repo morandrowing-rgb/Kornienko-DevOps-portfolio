@@ -1,0 +1,22 @@
+stages:
+  - terraform
+  - deploy
+
+terraform-plan:
+  stage: terraform
+  image: hashicorp/terraform:latest
+  script:
+    - cd terraform
+    - terraform init
+    - terraform plan
+  only:
+    - main
+
+deploy:
+  stage: deploy
+  image: python:3.11
+  script:
+    - pip install ansible
+    - ansible-playbook -i ansible/inventory.ini ansible/playbooks/deploy.yml
+  only:
+    - main

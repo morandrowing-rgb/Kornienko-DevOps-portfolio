@@ -1,0 +1,26 @@
+---
+- name: Deploy web application with Docker
+  hosts: web
+  become: yes
+  tasks:
+    - name: Install Docker and dependencies
+      apt:
+        name:
+          - docker.io
+          - docker-compose
+        state: present
+        update_cache: yes
+
+    - name: Copy application files
+      copy:
+        src: /home/ubuntu/app/
+        dest: /home/ubuntu/app/
+
+    - name: Run Docker container
+      docker_container:
+        name: webapp
+        image: yourusername/iac-webapp:latest
+        state: started
+        ports:
+          - "5000:5000"
+        restart_policy: always

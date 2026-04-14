@@ -1,0 +1,7 @@
+# Ansible для Bookstore
+- name: Deploy Bookstore
+  hosts: all
+  tasks:
+    - name: Example task
+      debug:
+        msg: "Bookstore deployed via Ansible"
