@@ -1,16 +1,23 @@
-# IaC Web-приложение (Terraform + Ansible + Docker)
+# 01 — IaC Web-приложение (Terraform + Ansible + Docker)
 
-### Что реализовано
-- Terraform — создание ВМ в Yandex Cloud
-- Ansible — конфигурация сервера и запуск Docker
-- Docker + Flask-приложение
-- GitLab CI/CD пайплайн
+**Полный цикл Infrastructure as Code** для простого веб-приложения.
+
+### Технологии
+- Terraform (Yandex Cloud)
+- Ansible (конфигурация сервера)
+- Docker + Dockerfile
+- GitLab CI/CD
 
 ### Как запустить локально
 ```bash
-# 1. Terraform (локально или в облаке)
-cd terraform && terraform init && terraform apply
+cd app
+docker build -t iac-webapp .
+docker run -d -p 5000:5000 --name webapp iac-webapp
+Приложение будет доступно по адресу: http://localhost:5000
 
-# 2. Ansible deploy
-ansible-playbook -i ansible/inventory.ini ansible/playbooks/deploy.yml
-```
+### Скриншоты
+
+<img src="screenshots/screenshot-app-running.png" alt="Приложение в работе">
+Веб-приложение успешно запущено
+<img src="screenshots/screenshot-docker-ps.png" alt="docker ps — запущенный контейнер">
+Контейнер работает, порт 5000 проброшен
