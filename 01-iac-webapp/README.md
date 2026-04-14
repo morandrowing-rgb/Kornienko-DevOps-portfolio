@@ -13,11 +13,18 @@
 cd app
 docker build -t iac-webapp .
 docker run -d -p 5000:5000 --name webapp iac-webapp
+```
+
 Приложение будет доступно по адресу: http://localhost:5000
 
 ### Скриншоты
 
+Веб-приложение в работе
 <img src="screenshots/screenshot-app-running.png" alt="Приложение в работе">
+
 Веб-приложение успешно запущено
-<img src="screenshots/screenshot-docker-ps.png" alt="docker ps — запущенный контейнер">
+
+Docker ps
+<img src="screenshots/screenshot-docker-ps.png" alt="docker ps – запущенный контейнер">
+
 Контейнер работает, порт 5000 проброшен
