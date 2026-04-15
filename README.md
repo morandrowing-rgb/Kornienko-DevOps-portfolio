@@ -26,7 +26,8 @@
 
 **Контакты:**  
 Telegram: @my_telegram_contact  
-Email: tacticalpoint@yandex.ru  
+Email: tacticalpoint@yandex.ru 
+       morandrowing@gmail.com
 Резюме: [HeadHunter](https://yaroslavl.hh.ru/resume/8e8911bbff103a4b5c0039ed1f4b624a474c71)
 
 ---
