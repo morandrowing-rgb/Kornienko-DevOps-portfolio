@@ -10,6 +10,8 @@ terraform/kind-config.yaml
 *.log
 
 # Screenshots (keep folder structure but not images)
+screenshots/*.png
+screenshots/*.jpg
 screenshots/*.jpeg
 !screenshots/.gitkeep
 
