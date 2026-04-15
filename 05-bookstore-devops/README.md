@@ -1,19 +1,3 @@
-#  Bookstore — Полный DevOps-проект 2026
-
-* Всё в одном репозитории:
-- Terraform + Ansible (IaC)
-- Docker + Kubernetes
-- GitLab CI + Jenkins
-- Grafana + Loki + Elasticsearch
-- Helm-ready
-
-### Запуск
-```bash
-# 1. Terraform + Ansible
-# 2. kubectl apply -f k8s/
-# 3. docker compose -f monitoring/docker-compose.monitoring.yml up
-```
-
 #  Bookstore DevOps: Terraform + K8s + Monitoring
 
 *Комплексный проект по развертыванию инфраструктуры и приложения с настроенным мониторингом и динамическим деплоем.*
@@ -58,19 +42,19 @@ envsubst < bookstore-deployment.yaml
 
 - **Скриншоты**
 
-    Веб-интерфейс приложения
+Веб-интерфейс приложения
 
 <img src="screenshots/screenshot-app.png" alt="Приложение в браузере">
 
 Flask приложение "Bookstore DevOps Project — Полный цикл!" и работающий контейнер в терминале.
 
-    Инфраструктура в Yandex Cloud (Terraform)
+Инфраструктура в Yandex Cloud (Terraform)
 
 <img src="screenshots/screenshot-terraform.png" alt="Terraform Graph">
 
 Визуализация связей ресурсов (VPC, Subnet, VM) через terraform graph.
 
-    Динамическая конфигурация Kubernetes
+Динамическая конфигурация Kubernetes
 
 <img src="screenshots/screenshot-k8s.png" alt="K8s Deployment">
 
