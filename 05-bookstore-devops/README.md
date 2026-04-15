@@ -1,4 +1,4 @@
-#  Bookstore DevOps: Terraform + K8s + Monitoring
+#  05 — Bookstore DevOps: Terraform + K8s + Monitoring
 
 *Комплексный проект по развертыванию инфраструктуры и приложения с настроенным мониторингом и динамическим деплоем.*
 
