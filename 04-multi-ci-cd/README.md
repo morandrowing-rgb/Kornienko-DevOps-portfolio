@@ -52,13 +52,3 @@ Flask приложение с сообщением "Multi-CI/CD App работа
 <img src="screenshots/screenshot-jenkinsfile.png" alt="Jenkinsfile">
 
 Pipeline с этапами Build и Docker Build
-
-*Что можно улучшить?*
-
-- Добавить unit-тесты в пайплайны
-
-- Настроить автоматический деплой в Kubernetes
-
-- Добавить статический анализ кода
-
-- Настроить уведомления (Telegram/Slack)
