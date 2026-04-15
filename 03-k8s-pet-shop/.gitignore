@@ -1,0 +1,32 @@
+# Terraform
+terraform/.terraform/
+terraform/terraform.tfstate*
+terraform/.terraform.lock.hcl
+terraform/kind-config.yaml
+
+# Kubernetes generated files
+*.kubeconfig
+*.lock
+*.log
+
+# Screenshots (keep folder structure but not images)
+screenshots/*.png
+screenshots/*.jpg
+screenshots/*.jpeg
+!screenshots/.gitkeep
+
+# Temporary files
+*.swp
+*.swo
+*~
+.DS_Store
+*.tmp
+
+# Scripts output
+check-health.sh
+test-pod
+nohup.out
+
+# Local kind cluster
+kind-config.yaml
+.kind/

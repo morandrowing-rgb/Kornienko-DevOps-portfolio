@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pet-shop-config
+  namespace: pet-shop
+data:
+  APP_NAME: "Pet Shop Store"
+  API_URL: "http://backend:80"
+  MAX_CONNECTIONS: "100"
+  LOG_LEVEL: "info"

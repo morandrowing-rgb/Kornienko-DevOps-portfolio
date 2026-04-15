@@ -15,6 +15,23 @@ spec:
     spec:
       containers:
       - name: backend
-        image: yourusername/pet-shop-backend:latest
+        image: nginx:alpine
         ports:
-        - containerPort: 5000
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5

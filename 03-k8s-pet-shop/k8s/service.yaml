@@ -4,9 +4,9 @@ metadata:
   name: frontend
   namespace: pet-shop
 spec:
-  type: ClusterIP
   selector:
     app: frontend
   ports:
   - port: 80
     targetPort: 80
+  type: ClusterIP
