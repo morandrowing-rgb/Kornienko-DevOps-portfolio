@@ -53,30 +53,30 @@ kubectl logs -f -n pet-shop -l app=frontend
 
 Скриншоты
 
-Состояние кластера
+- **Состояние кластера**
 <img src="screenshots/screenshot-cluster-nodes.png" alt="Состояние кластера">
 
 Control-plane нода в статусе Ready
 
-Запущенные поды
+- **Запущенные поды**
 <img src="screenshots/screenshot-pods.png" alt="Поды в namespace pet-shop">
 
-Сервисы
+- **Сервисы**
 <img src="screenshots/screenshot-services.png" alt="Kubernetes сервисы">
 
 Frontend ClusterIP сервис для внутренней маршрутизации
 
-ConfigMap и Secrets
+- **ConfigMap и Secrets**
 <img src="screenshots/screenshot-configmap-secret.png" alt="ConfigMap и Secrets">
 
 ConfigMap с 4 параметрами и Secret с 2 зашифрованными значениями
 
-Ingress правила
+- **Ingress правила**
 <img src="screenshots/screenshot-ingress.png" alt="Ingress маршрутизация">
 
 *NGINX Ingress с маршрутизацией pet-shop.local → frontend:80*
 
-Веб-интерфейс приложения
+- **Веб-интерфейс приложения**
 <img src="screenshots/screenshot--application-browser.png" alt="Работающее приложение">
 
 Welcome to nginx! — приложение успешно развернуто
