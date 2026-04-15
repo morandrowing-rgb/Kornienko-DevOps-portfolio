@@ -83,10 +83,10 @@ Welcome to nginx! — приложение успешно развернуто
 
 Реализованные возможности:
 
-*High Availability — 2+ реплики каждого сервиса
-*elf-healing — liveness/readiness probes
-*Zero-downtime deployments — RollingUpdate стратегия
-*Configuration as Code — ConfigMap для настроек
-*Secrets management — шифрование sensitive данных
-*Traffic routing — Ingress Controller с маршрутизацией
-*Resource management — limits/requests для контейнеров
+- **High Availability** — 2+ реплики каждого сервиса
+- **Helf-healing** — liveness/readiness probes
+- **Zero-downtime deployments** — RollingUpdate стратегия
+- **Configuration as Code** — ConfigMap для настроек
+- **Secrets management** — шифрование sensitive данных
+- **Traffic routing** — Ingress Controller с маршрутизацией
+- **Resource management** — limits/requests для контейнеров
