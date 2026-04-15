@@ -1,11 +1,31 @@
-// Полный Jenkins pipeline для Bookstore
 pipeline {
-  agent any
-  stages {
-    stage('Full DevOps') {
-      steps {
-        sh 'echo "Terraform + Docker + K8s + Monitoring"'
-      }
+    agent any
+    environment {
+        DOCKER_IMAGE = "your-registry/bookstore-app"
     }
-  }
+    stages {
+        stage('Lint & Test') {
+            steps {
+                sh 'pip install flake8 && flake8 app/'
+            }
+        }
+        stage('Build & Push') {
+            steps {
+                sh "docker build -t ${DOCKER_IMAGE}:${BUILD_NUMBER} ./app"
+                // sh "docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}"
+            }
+        }
+        stage('Terraform Apply') {
+            steps {
+                dir('terraform') {
+                    sh 'terraform init && terraform apply -auto-approve'
+                }
+            }
+        }
+        stage('Deploy to K8s') {
+            steps {
+                sh "kubectl set image deployment/bookstore bookstore=${DOCKER_IMAGE}:${BUILD_NUMBER}"
+            }
+        }
+    }
 }

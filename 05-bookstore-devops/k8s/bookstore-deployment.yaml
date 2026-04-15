@@ -4,8 +4,20 @@ metadata:
   name: bookstore
 spec:
   replicas: 3
+  selector:
+    matchLabels:
+      app: bookstore
   template:
+    metadata:
+      labels:
+        app: bookstore
     spec:
       containers:
       - name: bookstore
-        image: yourusername/bookstore:latest
+        image: yourusername/bookstore:${IMAGE_TAG}
+        ports:
+        - containerPort: 5000
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
