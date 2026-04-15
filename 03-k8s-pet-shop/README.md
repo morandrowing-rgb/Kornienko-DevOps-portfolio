@@ -61,8 +61,6 @@ Control-plane нода в статусе Ready
 Запущенные поды
 <img src="screenshots/screenshot-pods.png" alt="Поды в namespace pet-shop">
 
-*4 пода в статусе Running (2 frontend + 2 backend)*
-
 Сервисы
 <img src="screenshots/screenshot-services.png" alt="Kubernetes сервисы">
 
