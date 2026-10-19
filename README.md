@@ -27,8 +27,16 @@ Elasticsearch · Nginx · Python · Linux
 | 3 | [IaC Web-приложение](./01-iac-webapp) | Полный цикл: Terraform создаёт VM, Ansible ставит Docker, GitLab CI собирает приложение | Terraform, **Ansible**, Docker, **GitLab CI** |
 | 4 | [Bookstore DevOps](./05-bookstore-devops) | Terraform + Kubernetes-манифест + отдельный monitoring-compose (Prometheus/Grafana/Loki), Ansible-плейбук деплоя | Terraform, Kubernetes, Prometheus, Ansible, GitLab CI, Jenkins |
 | 5 | [Multi-CI/CD](./04-multi-ci-cd) | Одно приложение — два пайплайна: Jenkins и GitLab CI, для сравнения подходов | Jenkins, GitLab CI, Docker |
+| 6 | [GitLab CI Example](./06-gitlab-ci-example) | Отдельный минимальный пример GitLab CI: lint → test → build, кэш pip, artifacts, `rules:` вместо `only:` | GitLab CI, Python, Flask, Docker |
 
-В каждом проекте: README с инструкцией запуска, исходники/конфиги и скриншоты результата.
+В каждом проекте есть README с инструкцией запуска и исходники/конфиги; скриншоты результата — в проектах 01–05 (в новом 06 скриншотов пока нет).
+
+Про GitLab CI честно: файлы `.gitlab-ci.yml` лежат внутри папок проектов
+(01, 03, 04, 05) и в отдельном примере 06 — каждый рассчитан на импорт своей
+папки как отдельного GitLab-проекта. В проектах 03 и 04 пайплайны приведены
+к рабочему виду: в 03 — `helm lint`/`helm template` и проверка YAML, деплой
+только вручную при заданном `KUBECONFIG`; в 04 — тесты, сборка образа и
+ручная smoke-проверка внутри раннера. Production-деплоя в них нет.
 
 ## Что хочу усилить дальше
 

@@ -1,17 +1,100 @@
+# GitLab CI для учебного Kubernetes-стенда Pet-Shop (проект 03).
+#
+# Что пайплайн делает на самом деле:
+#   validate — проверяет YAML манифестов и Helm-чарт (lint + template).
+#   deploy   — ТОЛЬКО вручную (when: manual) и только если в CI/CD-переменных
+#              проекта задан доступ к кластеру (например, KUBECONFIG как
+#              File-переменная). По умолчанию в кластер ничего не ставится:
+#              это учебный стенд на kind, а не production.
+# Устаревший `only:` не используется — вместо него `rules:`.
+
 stages:
-  - build
+  - validate
   - deploy
 
-build:
-  stage: build
-  script:
-    - echo "Building Docker images..."
-  only:
-    - main
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
 
-deploy-k8s:
-  stage: deploy
+variables:
+  HELM_RELEASE: pet-shop
+  HELM_NAMESPACE: pet-shop
+
+# --- Проверка обычных YAML-манифестов из k8s/ ---
+validate-yaml:
+  stage: validate
+  image: python:3.12-alpine
+  before_script:
+    - pip install --no-cache-dir pyyaml
   script:
-    - kubectl apply -f k8s/
-  only:
-    - main
+    - |
+      python3 - <<'PY'
+      import glob
+      import sys
+
+      import yaml
+
+      files = sorted(glob.glob("k8s/*.yaml") + glob.glob("helm/pet-shop/Chart.yaml") + glob.glob("helm/pet-shop/values.yaml"))
+      if not files:
+          print("YAML files not found")
+          sys.exit(1)
+      for path in files:
+          with open(path, encoding="utf-8") as fh:
+              docs = list(yaml.safe_load_all(fh))
+          print(f"OK {path}: {len(docs)} document(s)")
+      PY
+  rules:
+    - changes:
+        - k8s/**/*
+        - helm/**/*
+        - .gitlab-ci.yml
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
+# --- Проверка Helm-чарта: lint + рендер шаблонов ---
+# alpine/helm содержит только helm, кластер для lint/template не нужен.
+helm-lint-template:
+  stage: validate
+  image:
+    name: alpine/helm:3.14.4
+    entrypoint: [""]
+  script:
+    - helm lint helm/pet-shop
+    - helm template "$HELM_RELEASE" helm/pet-shop --namespace "$HELM_NAMESPACE" > rendered.yaml
+    - test -s rendered.yaml
+    - grep -q "kind:" rendered.yaml
+    - cat rendered.yaml
+  artifacts:
+    when: always
+    expire_in: 1 week
+    paths:
+      - rendered.yaml
+  rules:
+    - changes:
+        - helm/**/*
+        - .gitlab-ci.yml
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
+# --- Ручной деплой (не запускается сам) ---
+# Нужен реальный кластер и переменная KUBECONFIG (тип File) в настройках
+# Settings -> CI/CD -> Variables GitLab-проекта. Без неё job честно упадёт
+# на проверке ниже, а не сделает вид, что деплой прошёл.
+deploy-kind-manual:
+  stage: deploy
+  image:
+    name: dtzar/helm-kubectl:3.14.4
+    entrypoint: [""]
+  script:
+    - |
+      if [ -z "${KUBECONFIG:-}" ]; then
+        echo "KUBECONFIG is not set: задайте File-переменную KUBECONFIG с доступом к учебному кластеру."
+        exit 1
+      fi
+    - kubectl cluster-info
+    - helm upgrade --install "$HELM_RELEASE" helm/pet-shop --namespace "$HELM_NAMESPACE" --create-namespace --wait --timeout 3m
+    - kubectl get all -n "$HELM_NAMESPACE"
+  when: manual
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
+    - when: never

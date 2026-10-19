@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.git/
+.gitlab-ci.yml
+README.md
+test_app.py
