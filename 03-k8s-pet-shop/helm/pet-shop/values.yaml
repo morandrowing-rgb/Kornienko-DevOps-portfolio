@@ -1,0 +1,29 @@
+namespace: pet-shop
+
+frontend:
+  image: nginx:alpine
+  replicas: 2
+  containerPort: 80
+  servicePort: 80
+  resources:
+    requests: { memory: "64Mi", cpu: "50m" }
+    limits: { memory: "128Mi", cpu: "100m" }
+
+backend:
+  image: nginx:alpine
+  replicas: 2
+  containerPort: 80
+  resources:
+    requests: { memory: "64Mi", cpu: "50m" }
+    limits: { memory: "128Mi", cpu: "100m" }
+
+config:
+  APP_NAME: "Pet Shop Store"
+  API_URL: "http://backend:80"
+  MAX_CONNECTIONS: "100"
+  LOG_LEVEL: "info"
+
+ingress:
+  enabled: true
+  host: pet-shop.local
+  className: nginx

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: pet-shop
+description: Учебный Helm-чарт демонстрационного приложения Pet-Shop (frontend + backend на nginx:alpine)
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

@@ -1,6 +1,6 @@
 # 01 — IaC Web-приложение (Terraform + Ansible + Docker)
 
-**Полный цикл Infrastructure as Code** для простого веб-приложения.
+**Учебный цикл Infrastructure as Code** для простого веб-приложения: Terraform + Ansible + Docker + GitLab CI.
 
 ### Технологии
 - Terraform (Yandex Cloud)

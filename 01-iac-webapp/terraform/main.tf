@@ -21,7 +21,7 @@ resource "yandex_compute_instance" "web" {
   }
 
   network_interface {
-    subnet_id = "your_subnet_id"  # замените на свой: либо найти существующую или создать новую
+    subnet_id = var.subnet_id # см. variables.tf / terraform.tfvars.example
     nat       = true
   }
 

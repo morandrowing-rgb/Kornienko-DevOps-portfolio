@@ -1,0 +1,19 @@
+# Минимальный конфиг Prometheus для учебного monitoring-стека проекта 05.
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ["prometheus:9090"]
+
+  - job_name: loki
+    # У Loki есть /metrics; логи Prometheus не собирает — их смотрит Grafana из Loki.
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["loki:3100"]
+
+  # - job_name: node
+  #   static_configs:
+  #     - targets: ["host.docker.internal:9100"]  # раскомментировать при запущенном node_exporter

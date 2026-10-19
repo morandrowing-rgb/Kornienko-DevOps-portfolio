@@ -46,7 +46,7 @@ envsubst < bookstore-deployment.yaml
 
 <img src="screenshots/screenshot-app.png" alt="Приложение в браузере">
 
-Flask приложение "Bookstore DevOps Project — Полный цикл!" и работающий контейнер в терминале.
+Flask-приложение Bookstore (учебное) и работающий контейнер в терминале.
 
 Инфраструктура в Yandex Cloud (Terraform)
 
@@ -59,3 +59,16 @@ Flask приложение "Bookstore DevOps Project — Полный цикл!"
 <img src="screenshots/screenshot-k8s.png" alt="K8s Deployment">
 
 Результат работы envsubst: образ с тегом v1.0.0 подставлен в манифест.
+
+### Мониторинг (Prometheus + Grafana + Loki)
+
+```bash
+cd monitoring
+docker compose -f docker-compose.monitoring.yml up -d
+# Grafana: http://localhost:3000 (admin/admin, только для локального стенда)
+# Prometheus: http://localhost:9090  (конфиг: monitoring/prometheus.yml)
+```
+
+Переменные Terraform вынесены в `terraform/variables.tf` (зона, CIDR подсети,
+образ VM, путь к SSH-ключу). `subnet_id` вручную не задаётся: подсеть создаёт
+сам конфиг, и VM ссылается на `yandex_vpc_subnet.bookstore-subnet.id`.

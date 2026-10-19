@@ -1,13 +1,13 @@
 # 03 — Kubernetes Microservices (Pet-Shop)
 
-**Production-ready Kubernetes кластер** для микросервисного приложения интернет-магазина товаров для животных.
+**Учебный Kubernetes-стенд (kind)** с манифестами микросервисного приложения интернет-магазина товаров для животных. Это не production: внутри — демонстрационные образы `nginx:alpine`, ценность — в манифестах, Ingress и Helm-чарте.
 
 ### Технологии
 - **Kubernetes (Kind)** — оркестрация контейнеров
 - **NGINX Ingress Controller** — маршрутизация трафика
 - **kubectl** — управление кластером
 - **Docker** — контейнеризация
-- **Terraform** — Infrastructure as Code
+- **Helm** — параметризованная установка (`helm/pet-shop/`)
 
 ### Как запустить локально
 
@@ -30,6 +30,18 @@ bash
 
 Port-forward для локального доступа
 kubectl port-forward svc/frontend -n pet-shop 9090:80
+```
+
+### Вариант с Helm
+
+Тот же набор ресурсов параметризован в чарте `helm/pet-shop/`
+(Chart.yaml, values.yaml, templates: deployment/service/configmap/ingress/namespace):
+
+```bash
+helm lint helm/pet-shop
+helm template pet-shop helm/pet-shop
+helm install pet-shop helm/pet-shop --create-namespace
+kubectl get all -n pet-shop
 ```
 
 Приложение будет доступно по адресу: http://localhost:9090
@@ -84,9 +96,9 @@ Welcome to nginx! — приложение успешно развернуто
 Реализованные возможности:
 
 - **High Availability** — 2+ реплики каждого сервиса
-- **Helf-healing** — liveness/readiness probes
+- **Self-healing** — liveness/readiness probes
 - **Zero-downtime deployments** — RollingUpdate стратегия
 - **Configuration as Code** — ConfigMap для настроек
-- **Secrets management** — шифрование sensitive данных
+- **Secrets** — значения в base64 (это кодирование, а не шифрование; в реальном проекте нужны Sealed Secrets / внешний secret-manager)
 - **Traffic routing** — Ingress Controller с маршрутизацией
 - **Resource management** — limits/requests для контейнеров

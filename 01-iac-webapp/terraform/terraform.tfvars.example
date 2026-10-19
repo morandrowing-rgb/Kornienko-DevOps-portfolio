@@ -1,0 +1,2 @@
+# Скопируйте в terraform.tfvars (он в .gitignore) и подставьте свой ID подсети.
+subnet_id = "e9bxxxxxxxxxxxxxxxxx"
